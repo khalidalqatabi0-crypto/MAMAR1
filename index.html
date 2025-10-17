@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>معمار - المتجر الإلكتروني</title>
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: black;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* 🌈 الخلفية المموجة */
+  .image-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  .layer-blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+  }
+
+  /* ========================== Header ========================== */
+  header {
+    background-color: #0a0a0a;
+    color: white;
+    padding: 1rem 1.5rem;
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  nav.nav {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-grow: 1;
+  }
+
+  nav.nav a.nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+
+  nav.nav a.nav-link:hover,
+  nav.nav a.nav-link.active {
+    color: #f9a825;
+    background-color: rgba(249, 168, 37, 0.15);
+  }
+
+  .btn-signing a {
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid white;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-block;
+  }
+
+  .btn-signing a:hover {
+    background-color: #f9a825;
+    color: #2c3e50;
+  }
+
+  .menu-toggle {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  /* 🌟 Responsive */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: block;
+    }
+
+    nav.nav {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: #34495e;
+      margin-top: 0.8rem;
+      border-radius: 6px;
+    }
+
+    nav.nav.active {
+      display: flex;
+    }
+
+    nav.nav a.nav-link {
+      text-align: center;
+      padding: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 1.1rem;
+    }
+
+    .btn-signing {
+      width: 100%;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    .btn-signing a {
+      width: 100%;
+      display: block;
+      padding: 0.8rem 0;
+    }
+  }
+
+  /* ========================== Main ========================== */
+  main {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    color: white;
+    text-align: center;
+  }
+
+  main h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  main p.description {
+    font-size: 1.2rem;
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-get-started,
+  .btn-signing-main {
+    padding: 0.8rem 1.2rem;
+    background: #f9a825;
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: 0.3s;
+  }
+
+  .btn-get-started:hover,
+  .btn-signing-main:hover {
+    background: #c38700;
+    color: #fff;
+  }
+</style>
+</head>
+<body>
+
+<!-- 🌈 خلفية مموجة -->
+<img class="image-gradient" src="gradient.png" alt="gradient">
+<div class="layer-blur"></div>
+
+<!-- ========================== Header ========================== -->
+<header>
+  <div class="header-container">
+    <div class="logo">معمار</div>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <nav class="nav" id="navLinks">
+      <a href="صفحة الادوات المنزلية.html" class="nav-link">أدوات منزلية</a>
+      <a href="صفحة الملابس.html" class="nav-link">الملابس</a>
+      <a href="صفحة اللعاب.html" class="nav-link">الألعاب</a>
+      <a href="صفحة الاحذية.html" class="nav-link">أحذية</a>
+      <a href="صفحة مواد البناء.html" class="nav-link">مواد بناء</a>
+      <a href="صفحة الجوالات.html" class="nav-link">الجوالات</a>
+    </nav>
+    <div class="btn-signing">
+      <a href="صفحة تسجيل الدخول.html">تسجيل الدخول</a>
+    </div>
+  </div>
+</header>
+
+<!-- ========================== Main ========================== -->
+<main>
+  <h1 data-aos="fade-up" data-aos-duration="1000">🛍️ مرحباً بكم في معمار</h1>
+  <p class="description" data-aos="fade-up" data-aos-duration="1500">
+    المتجر الإلكتروني الأول في اليمن لبيع البرندات العالمية — تسوق بسهولة، استمتع بجودة عالية وخدمة توصيل سريعة 🚚✨
+  </p>
+  <div class="buttons" data-aos="fade-up" data-aos-duration="2000">
+    <a href="#" class="btn-get-started">من نحن &gt;</a>
+    <a href="#" class="btn-signing-main">زيارة العروض الأسبوعية &gt;</a>
+  </div>
+  <!-- ✅ الروبوت الصغير ثلاثي الأبعاد -->
+  <div style="width: 100%; max-width: 500px; margin: 2rem auto;" data-aos="fade-up" data-aos-duration="2500">
+    <spline-viewer url="https://prod.spline.design/G2do9k35N-eeHGLx/scene.splinecode"></spline-viewer>
+  </div>
+</main>
+
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init();
+
+  const menuToggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('navLinks');
+  const navLinks = document.querySelectorAll('nav.nav a.nav-link');
+
+  menuToggle.addEventListener('click', () => {
+    nav.classList.toggle('active');
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+      if (window.innerWidth <= 768) {
+        nav.classList.remove('active');
+      }
+    });
+  });
+
+  
+</script>
+</body>
+</html>

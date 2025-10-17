@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📝 تسجيل حساب جديد</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+ background: linear-gradient(to bottom ,#f0c27b,#4b1248);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    nav {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    nav a {
+      background-color: #2c3e50;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #1a242f;
+    }
+
+    .register-container {
+background: rgba(255, 255, 255, 0.15);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 0.7s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+
+    label {
+      display: block;
+      margin-top: 0.8rem;
+      margin-bottom: 0.3rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #27ae60;
+      box-shadow: 0 0 6px rgba(39, 174, 96, 0.5);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      background-color: #27ae60;
+      color: white;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #1e8449;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    p a {
+      color: #27ae60;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    p a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 0.8rem;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="الصفحة الرئيسية للمطعم.html">🏠 العودة إلى الصفحة الرئيسية</a>
+  </nav>
+
+  <div class="register-container">
+    <h1>تسجيل حساب جديد</h1>
+    <hr>
+
+    <form onsubmit="return register(event)">
+      <label for="name">الاسم الكامل</label>
+      <input type="text" id="name" placeholder="ادخل اسمك الكامل" required>
+
+      <label for="email">البريد الإلكتروني</label>
+      <input type="email" id="email" placeholder="ادخل بريدك الإلكتروني" required>
+
+      <label for="password">كلمة المرور</label>
+      <input type="password" id="password" placeholder="ادخل كلمة المرور" required>
+
+      <label for="confirm">تأكيد كلمة المرور</label>
+      <input type="password" id="confirm" placeholder="أعد كتابة كلمة المرور" required>
+
+      <button type="submit">📥 إنشاء حساب</button>
+      <p>لديك حساب بالفعل؟ <a href="صفحة تسجيل الدخول.html">تسجيل الدخول</a></p>
+      <div id="message" class="message"></div>
+    </form>
+  </div>
+
+  <script>
+    function register(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const confirm = document.getElementById("confirm").value.trim();
+      const message = document.getElementById("message");
+
+      if (name === "" || email === "" || password === "" || confirm === "") {
+        message.textContent = "⚠️ الرجاء تعبئة جميع الحقول";
+        message.className = "message error";
+        return false;
+      }
+
+      if (password !== confirm) {
+        message.textContent = "❌ كلمتا المرور غير متطابقتين";
+        message.className = "message error";
+        return false;
+      }
+
+      // ✅ تخزين البيانات مؤقتًا (يمكن ربطه بقاعدة بيانات لاحقًا)
+      localStorage.setItem("user", JSON.stringify({ name, email, password }));
+
+      message.textContent = "✅ تم إنشاء الحساب بنجاح!";
+      message.className = "message success";
+
+      setTimeout(() => {
+        window.location.href = "login.html"; // إعادة توجيه لتسجيل الدخول
+      }, 1500);
+
+      return false;
+    }
+  </script>
+
+</body>
+</html>

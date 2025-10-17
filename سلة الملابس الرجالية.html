@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>السلة - ملابس رجالية</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+      direction: rtl;
+    }
+
+    header {
+      background: linear-gradient(90deg, #37474f, #263238);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      background: rgba(255,255,255,0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto 0;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: 1rem;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #263238;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background: #cfd8dc;
+      color: #263238;
+    }
+
+    .actions button {
+      background: #455a64;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .actions button:hover {
+      background: #1c313a;
+    }
+
+    .total-price {
+      text-align: right;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #263238;
+      margin-top: 1rem;
+    }
+
+    .empty-msg {
+      text-align: center;
+      font-size: 1.3rem;
+      color: #999;
+      margin-top: 3rem;
+    }
+
+    .btn-clear, .btn-pay {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+      margin-left: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .btn-clear {
+      background-color: #ef5350;
+    }
+
+    .btn-clear:hover {
+      background-color: #c62828;
+    }
+
+    .btn-pay {
+      background-color: #4caf50;
+    }
+
+    .btn-pay:hover {
+      background-color: #2e7d32;
+    }
+
+    .btns {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🧥 ملابس رجالية</div>
+  <a href="ملابس رجالية.html">← العودة للمتجر</a>
+</header>
+
+<main>
+  <h1>🛒 محتويات السلة</h1>
+  <div id="cart-container"></div>
+</main>
+
+<script>
+  const cartContainer = document.getElementById('cart-container');
+
+  function renderCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (cart.length === 0) {
+      cartContainer.innerHTML = '<p class="empty-msg">السلة فارغة.</p>';
+      return;
+    }
+
+    let tableHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>اسم المنتج</th>
+            <th>السعر (ريال)</th>
+            <th>الكمية</th>
+            <th>الإجمالي (ريال)</th>
+            <th>إجراء</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    let totalPrice = 0;
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      totalPrice += itemTotal;
+      tableHTML += `
+        <tr>
+          <td>${item.name}</td>
+          <td>${item.price}</td>
+          <td>${item.quantity}</td>
+          <td>${itemTotal}</td>
+          <td class="actions">
+            <button onclick="removeItem(${index})">حذف</button>
+          </td>
+        </tr>
+      `;
+    });
+
+    tableHTML += `
+        </tbody>
+      </table>
+      <div class="total-price">المجموع الكلي: ${totalPrice.toLocaleString()} ريال</div>
+      <div class="btns">
+        <button class="btn-clear" onclick="clearCart()">تفريغ السلة</button>
+        <button class="btn-pay" onclick="checkout()">الدفع</button>
+      </div>
+    `;
+
+    cartContainer.innerHTML = tableHTML;
+  }
+
+  function removeItem(index) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+  }
+
+  function clearCart() {
+    if (confirm('هل أنت متأكد من تفريغ السلة؟')) {
+      localStorage.removeItem('cart');
+      renderCart();
+    }
+  }
+
+  function checkout() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if(cart.length === 0) {
+      alert('السلة فارغة، لا يمكن الدفع.');
+      return;
+    }
+
+    alert('شكراً لطلبك! سيتم تحويلك إلى صفحة الدفع قريباً.');
+    // window.location.href = 'checkout.html'; // ← إن وُجدت صفحة دفع
+    localStorage.removeItem('cart');
+    renderCart();
+  }
+
+  renderCart();
+</script>
+
+</body>
+</html>
+
+           

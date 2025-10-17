@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>سلة الملابس النسائية</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #fce4ec;
+      margin: 0;
+      padding: 0 2rem;
+      direction: rtl;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #e91e63, #c2185b);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+    header .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 12px;
+      padding: 1rem 2rem 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #c2185b;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+      font-size: 1rem;
+    }
+    th {
+      background: #f8bbd0;
+      color: #880e4f;
+    }
+    img.product-img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    input.qty-input {
+      width: 60px;
+      text-align: center;
+      font-size: 1rem;
+      padding: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #ad1457;
+    }
+    .remove-btn {
+      background: #ef5350;
+    }
+    .remove-btn:hover {
+      background: #c62828;
+    }
+    .total-container {
+      margin-top: 2rem;
+      text-align: right;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #388e3c;
+    }
+    .empty-cart {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 1.2rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">👗 ملابس نسائية</div>
+  <nav>
+    <a href="ملابس بناتي.html">الرئيسية</a>
+    <a href="السلة الواو.html">السلة</a>
+  </nav>
+</header>
+
+<main>
+  <h1>سلة التسوق</h1>
+  <table id="cart-table">
+    <thead>
+      <tr>
+        <th>الصورة</th>
+        <th>المنتج</th>
+        <th>السعر للوحدة (ريال)</th>
+        <th>الكمية</th>
+        <th>السعر الكلي (ريال)</th>
+        <th>حذف</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- هنا سيتم إضافة المنتجات -->
+    </tbody>
+  </table>
+
+  <div class="empty-cart" id="empty-message" style="display:none;">
+    سلة التسوق فارغة 😢
+  </div>
+
+  <div class="total-container" id="total-price">
+    السعر الإجمالي: 0 ريال
+  </div>
+</main>
+
+<script>
+  // تحميل السلة من localStorage
+  function getCart() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+  }
+
+  // حفظ السلة في localStorage
+  function saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  // تحديث العرض
+  function renderCart() {
+    const cart = getCart();
+    const tbody = document.querySelector('#cart-table tbody');
+    const emptyMsg = document.getElementById('empty-message');
+    const totalPriceElem = document.getElementById('total-price');
+
+    tbody.innerHTML = ''; // تفريغ الجدول
+
+    if (cart.length === 0) {
+      emptyMsg.style.display = 'block';
+      totalPriceElem.textContent = 'السعر الإجمالي: 0 ريال';
+      return;
+    } else {
+      emptyMsg.style.display = 'none';
+    }
+
+    let total = 0;
+
+    cart.forEach(item => {
+      const tr = document.createElement('tr');
+
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+
+      tr.innerHTML = `
+        <td><img src="${item.img || 'الصور/default.jpg'}" alt="${item.name}" class="product-img"></td>
+        <td>${item.name}</td>
+        <td>${item.price}</td>
+        <td>
+          <input type="number" class="qty-input" min="1" value="${item.quantity}" />
+        </td>
+        <td>${itemTotal}</td>
+        <td><button class="remove-btn">حذف</button></td>
+      `;
+
+      // تحديث الكمية
+      const qtyInput = tr.querySelector('.qty-input');
+      qtyInput.addEventListener('change', (e) => {
+        let val = parseInt(e.target.value);
+        if (isNaN(val) || val < 1) {
+          val = 1;
+          qtyInput.value = val;
+        }
+        updateQuantity(item.id, val);
+      });
+
+      // حذف العنصر
+      const removeBtn = tr.querySelector('.remove-btn');
+      removeBtn.addEventListener('click', () => {
+        removeFromCart(item.id);
+      });
+
+      tbody.appendChild(tr);
+    });
+
+    totalPriceElem.textContent = `السعر الإجمالي: ${total} ريال`;
+  }
+
+  // تحديث الكمية في السلة
+  function updateQuantity(id, quantity) {
+    let cart = getCart();
+    const index = cart.findIndex(item => item.id === id);
+    if (index !== -1) {
+      cart[index].quantity = quantity;
+      saveCart(cart);
+      renderCart();
+    }
+  }
+
+  // حذف منتج من السلة
+  function removeFromCart(id) {
+    let cart = getCart();
+    cart = cart.filter(item => item.id !== id);
+    saveCart(cart);
+    renderCart();
+  }
+
+  renderCart();
+</script>
+<script src="جافا السلة.js"> </script>
+</body>
+</html>

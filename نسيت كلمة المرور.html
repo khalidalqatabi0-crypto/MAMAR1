@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>نسيت كلمة المرور — إرسال رابط (وهمي)</title>
+  <style>
+    :root{
+      --bg1:#6a11cb; --bg2:#2575fc;
+      --card-bg:#fff;
+      --accent:#2575fc;
+      --success:#2ecc71;
+      --danger:#e74c3c;
+      --muted:#666;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      min-height:100vh;
+      display:flex;
+      flex-direction: column;
+      align-items:center;
+  background: linear-gradient(to bottom ,#f0c27b,#4b1248);
+      padding:20px;
+    }
+
+    header {
+      width: 100%;
+      max-width: 420px;
+      margin-bottom: 15px;
+      padding: 12px 20px;
+      background: rgba(255 255 255 / 0.15);
+      border-radius: 12px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    header a {
+      color: #fff;
+      background: rgba(0 0 0 / 0.3);
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    header a:hover {
+      background: rgba(0 0 0 / 0.5);
+    }
+
+    .container{
+      width:100%;
+      max-width:420px;
+      background:var(--card-bg);
+      border-radius:14px;
+      padding:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.18);
+      text-align:right;
+      flex-grow: 1;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    h2{margin:0 0 8px;color:#333}
+    p.lead{margin:0 0 18px;color:var(--muted);font-size:0.95rem}
+
+    label{display:block;margin-top:10px;font-weight:600;color:#333}
+    input[type="email"]{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid #ddd;
+      font-size:1rem;
+      margin-top:6px;
+    }
+    input[type="email"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 6px rgba(37,117,252,0.18)}
+
+    .row{display:flex;gap:8px;align-items:center;margin-top:14px}
+    .btn{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:8px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      color:#fff;
+      background:var(--accent);
+    }
+    .btn:disabled{opacity:0.6;cursor:not-allowed}
+
+    .btn-secondary{
+      background:#444;color:#fff;
+    }
+
+    .message{margin-top:12px;min-height:22px;font-weight:700}
+    .message.success{color:var(--success)}
+    .message.error{color:var(--danger)}
+    .muted{color:var(--muted);font-size:0.95rem}
+
+    .link-box{
+      margin-top:12px;
+      padding:10px;
+      background:#f6f9ff;
+      border-radius:8px;
+      border:1px solid rgba(37,117,252,0.08);
+      word-break:break-all;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .link-text{flex:1;color:#0b5394}
+    .small{font-size:0.9rem;color:var(--muted)}
+
+    .countdown{margin-top:10px;font-weight:700;color:#333}
+
+    .center{ text-align:center; margin-top:12px; }
+
+    /* responsive */
+    @media (max-width:420px){
+      .row{flex-direction:column}
+      .btn{width:100%}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="صفحة تسجيل الدخول.html" aria-label="العودة إلى صفحة تسجيل الدخول">← العودة إلى تسجيل الدخول</a>
+</header>
+
+<div class="container" role="main" aria-labelledby="title">
+  <h2 id="title">نسيت كلمة المرور؟ 🔐</h2>
+  <p class="lead">أدخل بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور — هذه محاكاة (رابط وهمي).</p>
+
+  <label for="email">البريد الإلكتروني</label>
+  <input id="email" type="email" placeholder="example@domain.com" autocomplete="email" />
+
+  <div class="row">
+    <button id="sendBtn" class="btn" type="button">إرسال رابط إعادة التعيين</button>
+    <button id="clearBtn" class="btn btn-secondary" type="button">مسح الحقل</button>
+  </div>
+
+  <div id="message" class="message" aria-live="polite"></div>
+
+  <!-- هنا سيظهر الرابط الوهمي بعد الإرسال -->
+  <div id="linkArea" style="display:none;">
+    <div class="link-box" aria-hidden="false">
+      <div class="link-text" id="fakeLink"></div>
+      <div style="display:flex;gap:8px">
+        <button id="copyBtn" class="btn-secondary btn" type="button">نسخ الرابط</button>
+        <button id="openBtn" class="btn" type="button">فتح الرابط</button>
+      </div>
+    </div>
+
+    <div class="countdown" id="countdownText">سيتم إعادة التوجيه خلال <span id="countdown">8</span> ثانية...</div>
+
+    <div class="center small muted">
+      <label><input id="autoOpen" type="checkbox" checked /> فتح الرابط تلقائيًا عند انتهاء العدّ التنازلي</label>
+    </div>
+  </div>
+</div>
+
+<script>
+  // نفس سكربت الصفحة السابقة هنا (لم أغير شيء في الجافاسكريبت)
+  const sendBtn = document.getElementById('sendBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const emailInput = document.getElementById('email');
+  const msg = document.getElementById('message');
+  const linkArea = document.getElementById('linkArea');
+  const fakeLinkEl = document.getElementById('fakeLink');
+  const copyBtn = document.getElementById('copyBtn');
+  const openBtn = document.getElementById('openBtn');
+  const countdownEl = document.getElementById('countdown');
+  const countdownText = document.getElementById('countdownText');
+  const autoOpenCheckbox = document.getElementById('autoOpen');
+
+  let countdownTimer = null;
+  let redirectSeconds = 8;
+
+  function generateToken(len = 28){
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let token = '';
+    for(let i=0;i<len;i++){
+      token += chars.charAt(Math.floor(Math.random()*chars.length));
+    }
+    return token;
+  }
+
+  function makeFakeResetLink(email){
+    const token = generateToken(36);
+    const origin = (window.location && window.location.origin && window.location.origin !== "null") ? window.location.origin : 'https://example.com';
+    return `${origin}/reset-password.html?token=${token}&email=${encodeURIComponent(email)}`;
+  }
+
+  function isValidEmail(email){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function setMessage(text, type){
+    msg.textContent = text;
+    msg.className = 'message ' + (type === 'success' ? 'success' : (type === 'error' ? 'error' : ''));
+  }
+
+  function startCountdown(seconds, link){
+    clearInterval(countdownTimer);
+    let sec = seconds;
+    countdownEl.textContent = sec;
+    countdownText.style.display = 'block';
+
+    countdownTimer = setInterval(() => {
+      sec -= 1;
+      countdownEl.textContent = sec;
+      if(sec <= 0){
+        clearInterval(countdownTimer);
+        if(autoOpenCheckbox.checked){
+          window.open(link, '_blank');
+          setMessage('✅ تم فتح رابط إعادة التعيين (محاكاة).', 'success');
+        } else {
+          setMessage('✅ الرابط جاهز — انسخه أو افتحه يدوياً.', 'success');
+        }
+      }
+    }, 1000);
+  }
+
+  sendBtn.addEventListener('click', () => {
+    const email = emailInput.value.trim();
+    if(!isValidEmail(email)){
+      setMessage('❌ الرجاء إدخال بريد إلكتروني صالح.', 'error');
+      linkArea.style.display = 'none';
+      return;
+    }
+    sendBtn.disabled = true;
+    sendBtn.textContent = '... جاري إرسال الرابط';
+    setMessage('⏳ يتم تجهيز رابط إعادة التعيين (محاكاة)...', '');
+    setTimeout(() => {
+      const fakeLink = makeFakeResetLink(email);
+      fakeLinkEl.textContent = fakeLink;
+      linkArea.style.display = 'block';
+      setMessage('✅ تم إرسال رابط إعادة التعيين إلى بريدك (محاكاة). يمكنك نسخه أو فتحه الآن.', 'success');
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'إرسال رابط إعادة التعيين';
+      startCountdown(redirectSeconds, fakeLink);
+    }, 1200);
+  });
+
+  clearBtn.addEventListener('click', () => {
+    emailInput.value = '';
+    setMessage('', '');
+    linkArea.style.display = 'none';
+    clearInterval(countdownTimer);
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    const link = fakeLinkEl.textContent;
+    if(!link) return;
+    try{
+      await navigator.clipboard.writeText(link);
+      setMessage('✅ تم نسخ الرابط للحافظة.', 'success');
+    }catch(err){
+      const temp = document.createElement('textarea');
+      temp.value = link;
+      document.body.appendChild(temp);
+      temp.select();
+      try{ document.execCommand('copy'); setMessage('✅ تم نسخ الرابط للحافظة.', 'success'); }
+      catch(e){ setMessage('❌ فشل النسخ - انسخ الرابط يدوياً.', 'error'); }
+      temp.remove();
+    }
+  });
+
+  openBtn.addEventListener('click', () => {
+    const link = fakeLinkEl.textContent;
+    if(!link) return;
+    window.open(link, '_blank');
+    setMessage('✅ تم فتح الرابط في نافذة جديدة (محاكاة).', 'success');
+  });
+
+  window.addEventListener('beforeunload', () => clearInterval(countdownTimer));
+</script>
+</body>
+</html>

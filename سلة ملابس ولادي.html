@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>سلة ملابس ولادي</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #e0f7fa;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      direction: rtl;
+    }
+    header {
+      background: linear-gradient(90deg, #00796b, #004d40);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    header .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    main {
+      max-width: 900px;
+      margin: 6rem auto 2rem;
+      background: white;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      margin-bottom: 1.5rem;
+      color: #004d40;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+      font-size: 1rem;
+    }
+    th {
+      background-color: #00796b;
+      color: white;
+    }
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .quantity-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .quantity-group button {
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: #b2dfdb;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .quantity-group button:hover {
+      background: #80cbc4;
+    }
+    .quantity-group input {
+      width: 40px;
+      text-align: center;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 3px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .remove-btn {
+      background: #ef5350;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .remove-btn:hover {
+      background: #c62828;
+    }
+    .total-section {
+      text-align: right;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #004d40;
+      margin-top: 1rem;
+    }
+    .empty-msg {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #666;
+      padding: 2rem 0;
+    }
+    .back-btn {
+      display: inline-block;
+      background: #00796b;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 1rem;
+      transition: background-color 0.3s;
+    }
+    .back-btn:hover {
+      background: #004d40;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">👦 ملابس ولادي</div>
+  <nav>
+    <a href="ملابس ولادي.html">الرئيسية</a>
+  </nav>
+</header>
+
+<main>
+  <h1>سلة التسوق</h1>
+  <div id="cart-container"></div>
+</main>
+
+<script>
+  // جلب السلة من localStorage
+  function getCart() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+  }
+
+  // حفظ السلة في localStorage
+  function saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  // تحديث عرض السلة
+  function renderCart() {
+    const cart = getCart();
+    const container = document.getElementById('cart-container');
+
+    if (cart.length === 0) {
+      container.innerHTML = `
+        <p class="empty-msg">سلة التسوق فارغة.</p>
+        <a href="ملابس_ولادي.html" class="back-btn">العودة إلى المنتجات</a>
+      `;
+      return;
+    }
+
+    let tableHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>الصورة</th>
+            <th>المنتج</th>
+            <th>السعر للوحدة (ريال)</th>
+            <th>الكمية</th>
+            <th>السعر الكلي (ريال)</th>
+            <th>حذف</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    let totalPrice = 0;
+
+    cart.forEach(item => {
+      const itemTotal = item.price * item.quantity;
+      totalPrice += itemTotal;
+
+      tableHTML += `
+        <tr data-id="${item.id}">
+          <td><img src="${item.img}" alt="${item.name}"></td>
+          <td>${item.name}</td>
+          <td>${item.price}</td>
+          <td>
+            <div class="quantity-group">
+              <button class="qty-minus">−</button>
+              <input type="number" class="quantity" value="${item.quantity}" readonly />
+              <button class="qty-plus">+</button>
+            </div>
+          </td>
+          <td class="item-total">${itemTotal}</td>
+          <td><button class="remove-btn">حذف</button></td>
+        </tr>
+      `;
+    });
+
+    tableHTML += `
+        </tbody>
+      </table>
+      <div class="total-section">إجمالي السعر: ${totalPrice} ريال</div>
+    `;
+
+    container.innerHTML = tableHTML;
+
+    // إضافة الأحداث للأزرار
+    container.querySelectorAll('button.qty-minus').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const tr = e.target.closest('tr');
+        const id = tr.dataset.id;
+        changeQuantity(id, -1);
+      });
+    });
+
+    container.querySelectorAll('button.qty-plus').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const tr = e.target.closest('tr');
+        const id = tr.dataset.id;
+        changeQuantity(id, +1);
+      });
+    });
+
+    container.querySelectorAll('button.remove-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const tr = e.target.closest('tr');
+        const id = tr.dataset.id;
+        removeItem(id);
+      });
+    });
+  }
+
+  // تعديل الكمية
+  function changeQuantity(id, delta) {
+    let cart = getCart();
+    const index = cart.findIndex(item => item.id === id);
+    if (index !== -1) {
+      let newQty = cart[index].quantity + delta;
+      if (newQty < 1) newQty = 1; // الحد الأدنى 1
+      cart[index].quantity = newQty;
+      saveCart(cart);
+      renderCart();
+    }
+  }
+
+  // حذف منتج
+  function removeItem(id) {
+    let cart = getCart();
+    cart = cart.filter(item => item.id !== id);
+    saveCart(cart);
+    renderCart();
+  }
+
+  // لإكمال البيانات الصور (لو الصور غير مخزنة بالسلة)
+  // هنا تفترض الصور محفوظة مع السلة، لكن لو لا، يمكن ربطها بالمعرفات أو استيرادها
+  // في صفحة المنتجات عند إضافة المنتج للسلة، تأكد حفظ صورة المنتج مع بيانات السلة
+
+  renderCart();
+</script>
+<script src="جافا السلة.js"></script>
+</body>
+</html>

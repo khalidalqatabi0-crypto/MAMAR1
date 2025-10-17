@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>مواد منزلية</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #a8dadc, #f1faee);
+      margin: 0;
+      padding: 0;
+      color: #333;
+      direction: rtl;
+    }
+
+    /* ✅ الهيدر */
+    header {
+      background: linear-gradient(90deg, #2196f3, #1976d2);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    header .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    /* ✅ القائمة */
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      transition: max-height 0.3s ease;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    a.cart-link {
+      background: rgba(255,255,255,0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: bold;
+    }
+
+    /* ✅ زر القائمة للجوال */
+    .menu-toggle {
+      display: none;
+      font-size: 2rem;
+      background: none;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ✅ تنسيق المنتجات */
+    main {
+      padding: 6rem 2rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+    }
+    .card-body h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.2rem;
+    }
+    .price-old {
+      color: #999;
+      text-decoration: line-through;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+    .price {
+      color: #1976d2;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    .total-price {
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #2e7d32;
+    }
+    .quantity-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .quantity-group button {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: #bbdefb;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .quantity-group button:hover {
+      background: #90caf9;
+    }
+    .quantity-group input {
+      width: 50px;
+      text-align: center;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 4px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .add-to-cart {
+      background: #1e88e5;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-bottom: 0.5rem;
+    }
+    .add-to-cart:hover {
+      background: #1565c0;
+    }
+    .message {
+      margin-top: 0.5rem;
+      font-weight: bold;
+      min-height: 20px;
+      font-size: 0.9rem;
+    }
+
+    /* ✅ استجابة للشاشات الصغيرة */
+    @media (max-width: 768px) {
+      nav {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: #1976d2;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        overflow: hidden;
+        max-height: 0;
+      }
+      nav.show {
+        max-height: 300px; /* ارتفاع عند فتح القائمة */
+      }
+      nav a {
+        padding: 1rem;
+        width: 100%;
+        text-align: right;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">صفحة الأدوات المنزلية</div>
+  <button class="menu-toggle">☰</button>
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="#">المنتجات</a>
+    <a href="#">تواصل معنا</a>
+    <a href="السلة الواو.html" class="cart-link">🛒 السلة (<span id="cart-count">0</span>)</a>
+  </nav>
+</header>
+
+<main id="products-container"></main>
+
+<script>
+  // ✅ فتح وإغلاق القائمة للجوال
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('nav');
+  menuToggle.addEventListener('click', () => {
+    nav.classList.toggle('show');
+  });
+
+  // ✅ المنتجات
+  const products = [
+    { id: "m1", name: "صحون أصلي", price: 120, img: "الصور/٢٠٢٣٠١٠١_٢١٤٤٠٥.jpg" },
+    { id: "m2", name: "ملاعق حديد", price: 80, img: "الصور/٢٠٢٣٠٦٢٨_٠٦٢٣٣٤.jpg" },
+    { id: "m3", name: "قدور أصلية", price: 150, img: "الصور/٢٠٢٣٠٦٢٨_٠٦٢٤٣٨.jpg" },
+    { id: "m4", name: "فرن بوتيقاز", price: 250, img: "الصور/٢٠٢٣٠٤١٤_٢٢١٧١٨.jpg" }
+  ];
+
+  function getCart() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+  }
+
+  function saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  function updateCartCount() {
+    const cart = getCart();
+    const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+    document.getElementById('cart-count').textContent = count;
+  }
+
+  function createProductCard(product) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}">
+      <div class="card-body">
+        <h2>${product.name}</h2>
+        <div class="price-old">${product.price + 50} ريال</div>
+        <div class="price">${product.price} ريال</div>
+        <div class="quantity-group">
+          <button class="qty-minus">−</button>
+          <input type="number" class="quantity" value="1" min="1" readonly />
+          <button class="qty-plus">+</button>
+        </div>
+        <div class="total-price">السعر الكلي: ${product.price} ريال</div>
+        <button class="add-to-cart">إضافة إلى السلة</button>
+        <div class="message"></div>
+      </div>
+    `;
+
+    const qtyInput = card.querySelector('.quantity');
+    const totalPriceElem = card.querySelector('.total-price');
+    const addToCartBtn = card.querySelector('.add-to-cart');
+    const message = card.querySelector('.message');
+
+    function updateTotalPrice() {
+      totalPriceElem.textContent = `السعر الكلي: ${product.price * parseInt(qtyInput.value)} ريال`;
+    }
+
+    card.querySelector('.qty-minus').addEventListener('click', () => {
+      let qty = parseInt(qtyInput.value);
+      if (qty > 1) {
+        qtyInput.value = qty - 1;
+        updateTotalPrice();
+      }
+    });
+
+    card.querySelector('.qty-plus').addEventListener('click', () => {
+      let qty = parseInt(qtyInput.value);
+      qtyInput.value = qty + 1;
+      updateTotalPrice();
+    });
+
+    addToCartBtn.addEventListener('click', () => {
+      const quantity = parseInt(qtyInput.value);
+      let cart = getCart();
+      const existingIndex = cart.findIndex(item => item.id === product.id);
+      if (existingIndex !== -1) {
+        cart[existingIndex].quantity += quantity;
+      } else {
+        cart.push({ id: product.id, name: product.name, price: product.price, quantity });
+      }
+      saveCart(cart);
+      updateCartCount();
+      message.style.color = 'green';
+      message.textContent = `تمت إضافة ${quantity} × ${product.name} إلى السلة`;
+      setTimeout(() => { message.textContent = ''; }, 3000);
+    });
+
+    updateTotalPrice();
+    return card;
+  }
+
+  const container = document.getElementById('products-container');
+  products.forEach(prod => container.appendChild(createProductCard(prod)));
+
+  updateCartCount();
+</script>
+<script src="جافا السلة.js"></script>
+</body>
+</html>

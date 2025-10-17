@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <style>
+        /* ✅ إعدادات عامة */
+body {
+  font-family: 'Tajawal', sans-serif;
+  direction: rtl;
+  margin: 0;
+  padding: 0;
+background: linear-gradient(
+  to bottom,
+  rgba(255, 140, 0, 0.5),
+  rgba(139, 0, 0, 0.6)
+);
+
+  color: #333;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  margin-top: 20px;
+  color: #222;
+}
+
+a {
+  display: inline-block;
+  margin: 15px 0;
+  padding: 8px 15px;
+  background: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+a:hover {
+  background: #0056b3;
+}
+
+/* 🛍️ المنتجات */
+.product {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 20px auto;
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  border-radius: 8px;
+}
+
+.product h2 {
+  margin-bottom: 10px;
+}
+
+.product p {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.product button {
+  background: #28a745;
+  color: #fff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.product button:hover {
+  background: #218838;
+}
+
+/* 🛒 جدول السلة */
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background: #007bff;
+  color: #fff;
+}
+
+tr:hover {
+  background: #f9f9f9;
+}
+
+/* 🧮 أزرار التحكم بالكمية والحذف */
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+td button {
+  margin: 0 3px;
+  padding: 4px 8px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+td button:hover {
+  background: #0056b3;
+}
+
+td button:nth-child(1) {
+  background: #dc3545; /* زر الحذف */
+}
+
+td button:nth-child(1):hover {
+  background: #b02a37;
+}
+
+/* 🧾 كود الخصم */
+#coupon {
+  display: block;
+  margin: 10px auto;
+  padding: 8px;
+  width: 200px;
+  text-align: center;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[onclick="applyCoupon()"] {
+  display: block;
+  margin: 10px auto;
+  background: #ffc107;
+  color: #333;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+}
+
+button[onclick="applyCoupon()"]:hover {
+  background: #e0a800;
+}
+
+/* 💳 زر إتمام الشراء */
+button[onclick="goToCheckout()"] {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 18px;
+  background: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+}
+
+button[onclick="goToCheckout()"]:hover {
+  background: #218838;
+}
+
+/* الإجمالي */
+#total {
+  color: #28a745;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+h2 {
+  text-align: center;
+  margin: 15px 0;
+}
+
+    </style>
+  <meta charset="UTF-8">
+  <title>سلة المشتريات</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🛍️ سلة المشتريات</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>المنتج</th>
+        <th>السعر</th>
+        <th>الكمية</th>
+        <th>المجموع</th>
+        <th>حذف</th>
+      </tr>
+    </thead>
+    <tbody id="cart-items"></tbody>
+  </table>
+
+  <h3>كود خصم:</h3>
+  <input type="text" id="coupon" placeholder="أدخل الكود">
+  <button onclick="applyCoupon()">تطبيق</button>
+
+  <h2>الإجمالي: <span id="total">0</span> ريال</h2>
+
+  <button onclick="goToCheckout()"><a href="الدفع.html">إتمام الشراء ✅</a></button>
+  <a href="index.html">رجوع للمنتجات</a>
+
+  <script src="جافا السلة.js"></script>
+</body>
+</html>

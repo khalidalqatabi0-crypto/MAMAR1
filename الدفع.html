@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <style>
+    /* إعدادات أساسية */
+body {
+  font-family: "Tajawal", sans-serif;
+  background: linear-gradient(to bottom, #f0f0f0, #d9d9d9);
+  margin: 0;
+  direction: rtl;
+}
+
+/* رأس الصفحة */
+header {
+  background: linear-gradient(to right, #f9d423, #ff4e50);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header .logo h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+/* القائمة العلوية */
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+nav ul li a:hover {
+  color: #333;
+  background: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* زر القائمة في الجوال */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* الحاوية الأساسية */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+/* نموذج الدفع */
+form {
+  background: #ffffffcc;
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  max-width: 400px;
+  width: 100%;
+}
+
+h2 {
+  text-align: center;
+  color: #555;
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+label {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+input[type="text"],
+input[type="tel"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+input:focus {
+  border-color: #ffcc00;
+  outline: none;
+  box-shadow: 0 0 5px #ffcc00;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, #f9d423, #ff4e50);
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: linear-gradient(to right, #ff4e50, #f9d423);
+  transform: scale(1.05);
+}
+
+/* 🌐 تصميم متجاوب */
+@media (max-width: 768px) {
+  header {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  nav ul {
+    flex-direction: column;
+    background: linear-gradient(to right, #f9d423, #ff4e50);
+    width: 100%;
+    display: none;
+    margin-top: 10px;
+    border-radius: 8px;
+    padding: 10px 0;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  nav ul li {
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  nav ul li a {
+    display: block;
+    width: 100%;
+  }
+}
+
+  </style>
+  <meta charset="UTF-8">
+  <title>إتمام الشراء</title>
+
+</head>
+<body>
+
+  <!-- 🔸 رأس الصفحة -->
+  <header>
+    <div class="logo">
+      <h1>💳 إتمام عملية الشراء</h1>
+    
+    
+    <nav>
+      <ul>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="السلة الواو.html">العودة</a></li>
+        <li><a href="#">من نحن</a></li>
+        <li><a href="#">تواصل معنا</a></li>
+      </ul>
+     
+
+    </nav>
+    
+    </div>
+ <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </header>
+
+  <!-- 📝 نموذج الدفع -->
+  <main>
+    <form onsubmit="processOrder(event)">
+      <label>الاسم الكامل:</label>
+      <input type="text" id="fullname" required><br><br>
+
+      <label>العنوان:</label>
+      <input type="text" id="address" required><br><br>
+
+      <label>رقم الجوال:</label>
+      <input type="tel" id="phone" required><br><br>
+
+      <h2>المبلغ المطلوب: <span id="final-total"></span> ريال</h2>
+      <button type="submit">تأكيد الدفع</button>
+    </form>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector("nav ul").classList.toggle("show");
+    }
+  </script>
+  <script src="cart.js"></script>
+</body>
+</html>

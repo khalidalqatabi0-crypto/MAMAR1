@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>متجر ملابس بناتي</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+ background: linear-gradient(
+  to bottom,
+  rgba(255, 105, 180, 0.5),
+  rgba(186, 85, 211, 0.6)
+);
+
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+      direction: rtl;
+    }
+    header {
+      background: linear-gradient(90deg, #f06292, #ba68c8);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+    header a.cart-link {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      background: rgba(255,255,255,0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 1rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-body h2 {
+      margin: 0 0 0.5rem 0;
+    }
+    .price {
+      color: #ab47bc;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .quantity-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .quantity-group button {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: #f8bbd0;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .quantity-group button:hover {
+      background: #f48fb1;
+    }
+    .quantity-group input {
+      width: 50px;
+      text-align: center;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 4px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .add-to-cart {
+      background: #d81b60;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .add-to-cart:hover {
+      background: #ad1457;
+    }
+    .message {
+      margin-top: 0.5rem;
+      font-weight: bold;
+      min-height: 20px;
+    }
+    header {
+    background: linear-gradient(90deg, #f06292, #ba68c8);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  .logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+  nav.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  nav.nav-links .nav-item {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+  }
+  nav.nav-links .nav-item:hover {
+    background: rgba(255,255,255,0.3);
+  }
+  nav.nav-links .cart-link {
+    font-weight: bold;
+    background: rgba(255,255,255,0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🌸 ملابس بناتي</div>
+  <nav class="nav-links">
+    <a href="صفحة الملابس.html" class="nav-item">الرئيسية</a>
+    <a href="#" class="nav-item">المنتجات</a>
+    <a href="#" class="nav-item">تراصل معنا</a>
+
+    <a href="السلة الواو.html" class="cart-link">🛒 السلة (<span id="cart-count">0</span>)</a>
+  </nav>
+</header>
+<main id="products-container">
+  <!-- سيتم توليد المنتجات هنا بواسطة جافاسكريبت -->
+</main>
+
+<script>
+  // بيانات المنتجات (مثال)
+  const products = [
+    {
+      id: "p1",
+      name: "فستان نسائي أنيق",
+      price: 200,
+      img: "images/٢٠٢٥١٠٠٩_١٥٢٠٥٣.jpg",
+    },
+    {
+      id: "p2",
+      name: "فستان سهرة جميل",
+      price: 350,
+      img: "images/٢٠٢٥١٠٠٩_١٥١٤١٢.jpg",
+    },
+    {
+      id: "p3",
+      name: "فستان كاجوال مريح",
+      price: 150,
+      img: "images/٢٠٢٥١٠٠٩_١٥٢٠٥٣.jpg",
+    },
+  ];
+
+  const container = document.getElementById('products-container');
+
+  function createProductCard(product) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.id = product.id;
+    card.dataset.name = product.name;
+    card.dataset.price = product.price;
+
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}">
+      <div class="card-body">
+        <h2>${product.name}</h2>
+        <div class="price">${product.price} ريال</div>
+        <div class="quantity-group">
+          <button class="qty-minus">−</button>
+          <input type="number" class="quantity" value="1" min="1" readonly />
+          <button class="qty-plus">+</button>
+        </div>
+        <button class="add-to-cart">إضافة إلى السلة</button>
+        <div class="message"></div>
+      </div>
+    `;
+
+    // تحكم في الكمية
+    const qtyInput = card.querySelector('.quantity');
+    card.querySelector('.qty-minus').addEventListener('click', () => {
+      let qty = parseInt(qtyInput.value);
+      if(qty > 1) {
+        qtyInput.value = qty - 1;
+      }
+    });
+    card.querySelector('.qty-plus').addEventListener('click', () => {
+      let qty = parseInt(qtyInput.value);
+      qtyInput.value = qty + 1;
+    });
+
+    // إضافة إلى السلة
+    card.querySelector('.add-to-cart').addEventListener('click', () => {
+      const id = product.id;
+      const name = product.name;
+      const price = product.price;
+      const quantity = parseInt(qtyInput.value);
+
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      const existingIndex = cart.findIndex(item => item.id === id);
+
+      if (existingIndex !== -1) {
+        cart[existingIndex].quantity += quantity;
+      } else {
+        cart.push({id, name, price, quantity});
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+
+      const message = card.querySelector('.message');
+      message.style.color = 'green';
+      message.textContent = `${quantity} ${name} أُضيف إلى السلة.`;
+
+      setTimeout(() => {
+        message.textContent = '';
+      }, 3000);
+    });
+
+    return card;
+  }
+
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+    document.getElementById('cart-count').textContent = count;
+  }
+
+  // إنشاء البطاقات وعرضها
+  products.forEach(prod => {
+    const card = createProductCard(prod);
+    container.appendChild(card);
+  });
+
+  // تحديث عداد السلة عند تحميل الصفحة
+  updateCartCount();
+</script>
+<script src="جافا السلة.js"></script>
+</body>
+</html>

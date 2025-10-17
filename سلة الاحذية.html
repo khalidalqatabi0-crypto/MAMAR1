@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>👟 سلة الأحذية</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma;
+      background: #f0f3f4;
+      margin: 0;
+    }
+
+    /* ✅ Header */
+    header {
+      background: #2c3e50;
+      color: #fff;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #f1c40f;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 0.8rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background: #2c3e50;
+      color: white;
+    }
+
+    .btn {
+      padding: 5px 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .btn-delete {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .btn-qty {
+      background: #d5d8dc;
+      padding: 5px 10px;
+      border-radius: 50%;
+    }
+
+    .btn-pay {
+      background: #27ae60;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-pay:hover {
+      background: #1e8449;
+    }
+
+    .btn-back {
+      background: #2980b9;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-back:hover {
+      background: #1f5e87;
+    }
+
+    .total {
+      text-align: left;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .empty {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #777;
+      padding: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ✅ Header -->
+<header>
+  <div class="logo">👟 متجر الأحذية</div>
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="#products">المنتجات</a>
+    <a href="صفحة الاحذية.html">سلة الأحذية 🛒</a>
+  </nav>
+</header>
+
+<!-- ✅ محتوى السلة -->
+<main>
+  <div id="cartContainer"></div>
+</main>
+
+<script>
+  const container = document.getElementById("cartContainer");
+
+  function renderCart() {
+    let cart = JSON.parse(localStorage.getItem("cartShoes")) || [];
+    container.innerHTML = "";
+
+    if (cart.length === 0 || cart.every(item => item.quantity === 0)) {
+      container.innerHTML = `<div class="empty">السلة فارغة 🛍️</div>`;
+      // زر الرجوع حتى لو السلة فاضية
+      const backBtn = document.createElement("button");
+      backBtn.className = "btn-back";
+      backBtn.textContent = "🔙 الرجوع إلى الرئيسية";
+      backBtn.onclick = () => { window.location.href = "index.html"; };
+      container.appendChild(backBtn);
+      return;
+    }
+
+    let table = document.createElement("table");
+    table.innerHTML = `
+      <tr>
+        <th>المنتج</th>
+        <th>السعر</th>
+        <th>الكمية</th>
+        <th>الإجمالي</th>
+        <th>حذف</th>
+      </tr>
+    `;
+
+    let total = 0;
+    cart.forEach((item, index) => {
+      if (item.quantity === 0) return;
+      let row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.price} ريال</td>
+        <td>
+          <button class="btn btn-qty" onclick="changeQty(${index}, -1)">−</button>
+          ${item.quantity}
+          <button class="btn btn-qty" onclick="changeQty(${index}, 1)">+</button>
+        </td>
+        <td>${item.price * item.quantity} ريال</td>
+        <td><button class="btn btn-delete" onclick="deleteQty(${index})">🧹 تصفير</button></td>
+      `;
+      table.appendChild(row);
+      total += item.price * item.quantity;
+    });
+
+    container.appendChild(table);
+
+    let totalDiv = document.createElement("div");
+    totalDiv.className = "total";
+    totalDiv.textContent = "الإجمالي: " + total + " ريال";
+    container.appendChild(totalDiv);
+
+    let payBtn = document.createElement("button");
+    payBtn.className = "btn-pay";
+    payBtn.textContent = "💳 الدفع الآن";
+    payBtn.onclick = () => {
+      alert(`💰 مجموع الدفع: ${total} ريال. شكراً لتسوقك 👟`);
+      localStorage.removeItem("cartShoes");
+      renderCart();
+    };
+    container.appendChild(payBtn);
+
+    // ✅ زر الرجوع إلى الرئيسية
+    let backBtn = document.createElement("button");
+    backBtn.className = "btn-back";
+    backBtn.textContent = "🔙 الرجوع إلى الرئيسية";
+    backBtn.onclick = () => {
+      window.location.href = "index.html";
+    };
+    container.appendChild(backBtn);
+  }
+
+  function changeQty(index, amount) {
+    let cart = JSON.parse(localStorage.getItem("cartShoes")) || [];
+    cart[index].quantity += amount;
+    if (cart[index].quantity < 0) cart[index].quantity = 0;
+    localStorage.setItem("cartShoes", JSON.stringify(cart));
+    renderCart();
+  }
+
+  function deleteQty(index) {
+    let cart = JSON.parse(localStorage.getItem("cartShoes")) || [];
+    cart[index].quantity = 0;
+    localStorage.setItem("cartShoes", JSON.stringify(cart));
+    renderCart();
+  }
+
+  renderCart();
+</script>
+
+</body>
+</html>

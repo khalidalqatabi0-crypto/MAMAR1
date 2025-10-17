@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سلة الألعاب</title>
+  <style>
+    :root {
+      --main-color: #2c3e50;
+      --accent-color: #e74c3c;
+      --bg-color: #f0f3f4;
+      --text-color: #333;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    header {
+      background-color: var(--main-color);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 0.8rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: var(--main-color);
+      color: white;
+    }
+
+    .btn {
+      padding: 5px 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .btn-delete {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .btn-clear {
+      background: #c0392b;
+      color: white;
+      padding: 10px 20px;
+      margin-top: 1rem;
+    }
+
+    .btn-qty {
+      background: #d5d8dc;
+      padding: 5px 10px;
+      margin: 0 3px;
+      border-radius: 50%;
+    }
+
+    .btn-pay {
+      background: #27ae60;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-pay:hover {
+      background: #1e8449;
+    }
+
+    .total {
+      text-align: left;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .empty {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #777;
+      padding: 2rem 0;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--main-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>🛒 سلة الألعاب</header>
+
+<main>
+  <div id="cartContainer"></div>
+  <a href="صفحة اللعاب.html" class="back-link">⬅️ الرجوع إلى المتجر</a>
+</main>
+
+<script>
+  const cartContainer = document.getElementById("cartContainer");
+
+  function renderCart() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cartContainer.innerHTML = "";
+
+    if (cart.length === 0) {
+      cartContainer.innerHTML = `<div class="empty">السلة فارغة 🛍️</div>`;
+      return;
+    }
+
+    let table = document.createElement("table");
+    let thead = `
+      <tr>
+        <th>المنتج</th>
+        <th>السعر</th>
+        <th>الكمية</th>
+        <th>الإجمالي</th>
+        <th>حذف</th>
+      </tr>`;
+    table.innerHTML = thead;
+
+    let totalAll = 0;
+
+    cart.forEach((item, index) => {
+      const total = item.price * item.quantity;
+      totalAll += total;
+
+      let row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.price} ريال</td>
+        <td>
+          <button class="btn btn-qty" onclick="changeQuantity(${index}, -1)">−</button>
+          ${item.quantity}
+          <button class="btn btn-qty" onclick="changeQuantity(${index}, 1)">+</button>
+        </td>
+        <td>${total} ريال</td>
+        <td><button class="btn btn-delete" onclick="removeItem(${index})">🗑️</button></td>
+      `;
+      table.appendChild(row);
+    });
+
+    cartContainer.appendChild(table);
+
+    let totalDiv = document.createElement("div");
+    totalDiv.className = "total";
+    totalDiv.textContent = "الإجمالي الكلي: " + totalAll + " ريال";
+    cartContainer.appendChild(totalDiv);
+
+    let clearBtn = document.createElement("button");
+    clearBtn.textContent = "🧹 تفريغ السلة";
+    clearBtn.className = "btn-clear";
+    clearBtn.onclick = clearCart;
+    cartContainer.appendChild(clearBtn);
+
+    // ✅ زر الدفع
+    let payBtn = document.createElement("button");
+    payBtn.textContent = "💳 الدفع الآن";
+    payBtn.className = "btn-pay";
+    payBtn.onclick = proceedToPayment;
+    cartContainer.appendChild(payBtn);
+  }
+
+  function removeItem(index) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+
+  function clearCart() {
+    localStorage.removeItem("cart");
+    renderCart();
+  }
+
+  function changeQuantity(index, amount) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart[index].quantity += amount;
+    if (cart[index].quantity < 1) cart[index].quantity = 1;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+
+  function proceedToPayment() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (cart.length === 0) {
+      alert("⚠️ السلة فارغة!");
+      return;
+    }
+
+    // حساب المجموع الكلي
+    let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    alert(`💳 شكراً لك! مجموع الدفع: ${total} ريال ✅`);
+  }
+
+  renderCart();
+</script>
+
+</body>
+</html>
