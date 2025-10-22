@@ -3,22 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>مواد بناء</title>
+  <title>مواد البناء</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-   background: linear-gradient(to bottom, #4b4b4b, #bfbfbf);
-
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(to bottom, #d7ccc8, #efebe9);
       margin: 0;
       padding: 0;
       color: #333;
       direction: rtl;
+      scroll-behavior: smooth;
     }
 
-    /* ✅ الهيدر */
+    /* 💫 الهيدر */
     header {
-background: linear-gradient(to bottom, #f9d423, #757575);
-
+      background: linear-gradient(90deg, #795548, #d7ccc8);
       color: white;
       padding: 1rem 2rem;
       display: flex;
@@ -29,18 +28,15 @@ background: linear-gradient(to bottom, #f9d423, #757575);
       left: 0;
       right: 0;
       z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
     }
     header .logo {
       font-size: 1.8rem;
-      font-weight: bold;
-      white-space: nowrap;
+      font-weight: 800;
     }
-
-    /* ✅ القائمة */
     nav {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.2rem;
       align-items: center;
       transition: max-height 0.3s ease;
     }
@@ -53,7 +49,7 @@ background: linear-gradient(to bottom, #f9d423, #757575);
       transition: background-color 0.3s;
     }
     nav a:hover {
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.25);
     }
     a.cart-link {
       background: rgba(255,255,255,0.2);
@@ -61,23 +57,21 @@ background: linear-gradient(to bottom, #f9d423, #757575);
       border-radius: 8px;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       font-weight: bold;
     }
-
-    /* ✅ زر القائمة للجوال */
     .menu-toggle {
       display: none;
-      font-size: 2rem;
+      font-size: 1.8rem;
       background: none;
       color: white;
       border: none;
       cursor: pointer;
     }
 
-    /* ✅ تنسيق المنتجات */
+    /* 🧱 المنتجات */
     main {
-      padding: 6rem 2rem 2rem;
+      padding: 7rem 2rem 3rem;
       max-width: 1200px;
       margin: 0 auto;
       display: grid;
@@ -86,11 +80,16 @@ background: linear-gradient(to bottom, #f9d423, #757575);
     }
     .card {
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
     .card img {
       width: 100%;
@@ -101,12 +100,12 @@ background: linear-gradient(to bottom, #f9d423, #757575);
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       flex-grow: 1;
     }
     .card-body h2 {
       margin: 0 0 0.5rem 0;
       font-size: 1.2rem;
+      color: #5d4037;
     }
     .price-old {
       color: #999;
@@ -115,7 +114,7 @@ background: linear-gradient(to bottom, #f9d423, #757575);
       margin-bottom: 0.2rem;
     }
     .price {
-      color: #1976d2;
+      color: #795548;
       font-weight: bold;
       margin-bottom: 1rem;
       font-size: 1.1rem;
@@ -135,14 +134,14 @@ background: linear-gradient(to bottom, #f9d423, #757575);
       width: 32px;
       height: 32px;
       border: none;
-      background: #bbdefb;
+      background: #d7ccc8;
       border-radius: 50%;
       font-size: 1.2rem;
       cursor: pointer;
       transition: background-color 0.2s;
     }
     .quantity-group button:hover {
-      background: #90caf9;
+      background: #bca38c;
     }
     .quantity-group input {
       width: 50px;
@@ -154,19 +153,34 @@ background: linear-gradient(to bottom, #f9d423, #757575);
       pointer-events: none;
       user-select: none;
     }
-    .add-to-cart {
-      background: #3a3d3f;
-      color: white;
+
+    .btns {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .add-to-cart, .delete-from-cart {
+      flex: 1;
       border: none;
       padding: 10px;
       font-weight: bold;
       border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s;
-      margin-bottom: 0.5rem;
+    }
+    .add-to-cart {
+      background: linear-gradient(90deg, #8d6e63, #5d4037);
+      color: white;
     }
     .add-to-cart:hover {
-      background: #1565c0;
+      background: linear-gradient(90deg, #a1887f, #4e342e);
+    }
+    .delete-from-cart {
+      background: #c62828;
+      color: white;
+    }
+    .delete-from-cart:hover {
+      background: #b71c1c;
     }
     .message {
       margin-top: 0.5rem;
@@ -175,22 +189,21 @@ background: linear-gradient(to bottom, #f9d423, #757575);
       font-size: 0.9rem;
     }
 
-    /* ✅ استجابة للشاشات الصغيرة */
+    /* 📱 للجوال */
     @media (max-width: 768px) {
       nav {
         position: absolute;
         top: 70px;
         right: 0;
-background: linear-gradient(to bottom, #d7ccc8, #795548);
-
+        background: #5d4037;
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
-        overflow: hidden;
         max-height: 0;
+        overflow: hidden;
       }
       nav.show {
-        max-height: 300px; /* ارتفاع عند فتح القائمة */
+        max-height: 300px;
       }
       nav a {
         padding: 1rem;
@@ -201,33 +214,30 @@ background: linear-gradient(to bottom, #d7ccc8, #795548);
         display: block;
       }
     }
-   
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">صفحة  البناء</div>
+  <div class="logo">🧱 مواد البناء</div>
   <button class="menu-toggle">☰</button>
   <nav>
     <a href="index.html">الرئيسية</a>
     <a href="#">المنتجات</a>
     <a href="#">تواصل معنا</a>
-    <a href="السلة الواو.html" class="cart-link">🛒 السلة (<span id="cart-count">0</span>)</a>
+    <a href="السلة.html" class="cart-link">🛒 السلة (<span id="cart-count">0</span>)</a>
   </nav>
 </header>
 
 <main id="products-container"></main>
 
 <script>
-  // ✅ فتح وإغلاق القائمة للجوال
+  // 🔹 القائمة في الجوال
   const menuToggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('nav');
-  menuToggle.addEventListener('click', () => {
-    nav.classList.toggle('show');
-  });
+  menuToggle.addEventListener('click', () => nav.classList.toggle('show'));
 
-  // ✅ المنتجات
+  // 🔹 بيانات المنتجات
   const products = [
     { id: "m1", name: "حراثة", price: 12500, img: "الصور/٢٠٢٣٠١٠١_٢١٤٤٠٥.jpg" },
     { id: "m2", name: "كريك", price: 805520, img: "الصور/٢٠٢٣٠٦٢٨_٠٦٢٣٣٤.jpg" },
@@ -238,11 +248,9 @@ background: linear-gradient(to bottom, #d7ccc8, #795548);
   function getCart() {
     return JSON.parse(localStorage.getItem('cart')) || [];
   }
-
   function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
-
   function updateCartCount() {
     const cart = getCart();
     const count = cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -252,29 +260,30 @@ background: linear-gradient(to bottom, #d7ccc8, #795548);
   function createProductCard(product) {
     const card = document.createElement('div');
     card.classList.add('card');
-
     card.innerHTML = `
       <img src="${product.img}" alt="${product.name}">
       <div class="card-body">
         <h2>${product.name}</h2>
-        <div class="price-old">${product.price + 50} ريال</div>
+        <div class="price-old">${product.price + 500} ريال</div>
         <div class="price">${product.price} ريال</div>
         <div class="quantity-group">
           <button class="qty-minus">−</button>
           <input type="number" class="quantity" value="1" min="1" readonly />
           <button class="qty-plus">+</button>
         </div>
-       
         <div class="total-price">السعر الكلي: ${product.price} ريال</div>
-        <button class="add-to-cart">إضافة إلى السلة</button>
+        <div class="btns">
+          <button class="add-to-cart">إضافة إلى السلة</button>
+          <button class="delete-from-cart">🗑️ حذف</button>
+        </div>
         <div class="message"></div>
       </div>
-      
     `;
 
     const qtyInput = card.querySelector('.quantity');
     const totalPriceElem = card.querySelector('.total-price');
     const addToCartBtn = card.querySelector('.add-to-cart');
+    const deleteBtn = card.querySelector('.delete-from-cart');
     const message = card.querySelector('.message');
 
     function updateTotalPrice() {
@@ -307,8 +316,17 @@ background: linear-gradient(to bottom, #d7ccc8, #795548);
       saveCart(cart);
       updateCartCount();
       message.style.color = 'green';
-      message.textContent = `تمت إضافة ${quantity} × ${product.name} إلى السلة`;
-      setTimeout(() => { message.textContent = ''; }, 3000);
+      message.textContent = `تمت إضافة ${quantity} × ${product.name} إلى السلة ✅`;
+      setTimeout(() => message.textContent = '', 3000);
+    });
+
+    deleteBtn.addEventListener('click', () => {
+      let cart = getCart().filter(item => item.id !== product.id);
+      saveCart(cart);
+      updateCartCount();
+      message.style.color = 'red';
+      message.textContent = `تم حذف ${product.name} من السلة ❌`;
+      setTimeout(() => message.textContent = '', 3000);
     });
 
     updateTotalPrice();
@@ -317,9 +335,8 @@ background: linear-gradient(to bottom, #d7ccc8, #795548);
 
   const container = document.getElementById('products-container');
   products.forEach(prod => container.appendChild(createProductCard(prod)));
-
   updateCartCount();
 </script>
-<script src="جافا السلة.js"></script>
+
 </body>
 </html>
