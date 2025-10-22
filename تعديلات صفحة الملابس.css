@@ -643,80 +643,110 @@ body {
   background: linear-gradient(180deg, #fffdf5 0%, #fdf6d3 100%);
 }
 
-.btn {
-  background: linear-gradient(90deg, #000000, #4b4b4b);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
 
-.btn:hover {
-  background: linear-gradient(90deg, #e5c641, #ffde59);
-  color: #000;
-}
+/* تحسين المظهر على الجوال */
 
-.header__container {
-  background: linear-gradient(135deg, #fff 0%, #f9f6e5 100%);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-.arrival__card,
-.favourite__card {
-  background-color: var(--white);
-  border-radius: 1rem;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-  transition: 0.3s;
-}
-
-.arrival__card:hover,
-.favourite__card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
 /* تحسين المظهر على الجوال */
 @media (max-width: 768px) {
+  /* شريط التنقل */
   nav {
     position: fixed;
-    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
     background-color: var(--primary-color);
     z-index: 1000;
   }
 
+  .nav__menu__btn {
+    display: block;
+  }
+
+  .nav__links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--primary-color);
+    transform: translateY(-120%);
+    transition: transform 0.4s ease;
+    padding: 2rem 1rem;
+    gap: 1.2rem;
+  }
+
+  .nav__links.open {
+    transform: translateY(0);
+  }
+
+  /* العنوان الرئيسي */
   .header__container {
     grid-template-columns: 1fr;
     text-align: center;
-    padding: 3rem 1rem;
+    padding: 2.5rem 1rem;
   }
 
   .header__content h1 {
-    font-size: 2.2rem;
-    line-height: 3rem;
+    font-size: 2rem;
+    line-height: 2.8rem;
   }
 
   .header__content p {
     font-size: 1rem;
+    margin: 1rem 0;
   }
 
   .header__image img {
     width: 90%;
-    margin: 2rem auto;
     border-radius: 15px;
+    margin: 1.5rem auto;
   }
 
+  /* بطاقات العرض */
   .arrival__grid,
   .favourite__grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
+  .arrival__card,
+  .favourite__card {
+    width: 90%;
+    margin: auto;
+  }
+
+  /* قسم التخفيض */
   .sale__container {
     grid-template-columns: 1fr;
     text-align: center;
   }
 
+  .sale__content h2 {
+    font-size: 2.5rem;
+    line-height: 3rem;
+  }
+
+  .sale__content p {
+    font-size: 1rem;
+  }
+
+  /* قسم التحميل */
   .download__container {
     grid-template-columns: 1fr;
     text-align: center;
   }
 
+  .download__image img {
+    width: 80%;
+    margin: auto;
+  }
+
+  .download__links {
+    justify-content: center;
+  }
+
+  /* الفوتر */
   .footer__container {
     grid-template-columns: 1fr;
     text-align: center;
@@ -726,7 +756,13 @@ body {
     justify-content: center;
   }
 
+  .footer__bar {
+    font-size: 1rem;
+  }
+
   .btn {
     width: 100%;
+    font-size: 1rem;
   }
 }
+
