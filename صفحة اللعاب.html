@@ -3,22 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>الالعاب </title>
+  <title>الألعاب</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, sans-serif;
-background: linear-gradient(to bottom, #f12711, #f5af19);
-
+      background: linear-gradient(to bottom, #1f1c2c, #928DAB);
       margin: 0;
       padding: 0;
-      color: #333;
+      color: #222;
       direction: rtl;
     }
 
     /* ✅ الهيدر */
     header {
-background: linear-gradient(to bottom, #000000, #00FF87);
-
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: white;
       padding: 1rem 2rem;
       display: flex;
@@ -29,15 +27,13 @@ background: linear-gradient(to bottom, #000000, #00FF87);
       left: 0;
       right: 0;
       z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
     }
     header .logo {
       font-size: 1.8rem;
       font-weight: bold;
-      white-space: nowrap;
     }
 
-    /* ✅ القائمة */
     nav {
       display: flex;
       gap: 1.5rem;
@@ -56,18 +52,9 @@ background: linear-gradient(to bottom, #000000, #00FF87);
       background: rgba(255,255,255,0.2);
     }
     a.cart-link {
-background: linear-gradient(
-  to bottom,
-  rgba(255, 140, 0, 0.5),
-  rgba(139, 0, 0, 0.6)
-);
-
-
+      background: linear-gradient(135deg, #4CAF50, #2E7D32);
       padding: 0.5rem 1rem;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
       font-weight: bold;
     }
 
@@ -81,9 +68,9 @@ background: linear-gradient(
       cursor: pointer;
     }
 
-    /* ✅ تنسيق المنتجات */
+    /* ✅ البطاقات */
     main {
-      padding: 6rem 2rem 2rem;
+      padding: 7rem 2rem 4rem;
       max-width: 1200px;
       margin: 0 auto;
       display: grid;
@@ -93,10 +80,14 @@ background: linear-gradient(
     .card {
       background: white;
       border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.03);
     }
     .card img {
       width: 100%;
@@ -107,29 +98,22 @@ background: linear-gradient(
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       flex-grow: 1;
     }
     .card-body h2 {
       margin: 0 0 0.5rem 0;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
     .price-old {
-      color: #999;
+      color: #888;
       text-decoration: line-through;
       font-size: 0.9rem;
-      margin-bottom: 0.2rem;
     }
     .price {
-      color: #1976d2;
+      color: #e91e63;
       font-weight: bold;
-      margin-bottom: 1rem;
       font-size: 1.1rem;
-    }
-    .total-price {
-      font-weight: bold;
-      margin-bottom: 1rem;
-      color: #2e7d32;
+      margin: 0.4rem 0 1rem;
     }
     .quantity-group {
       display: flex;
@@ -141,14 +125,14 @@ background: linear-gradient(
       width: 32px;
       height: 32px;
       border: none;
-      background: #bbdefb;
+      background: #f0f0f0;
       border-radius: 50%;
       font-size: 1.2rem;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: 0.2s;
     }
     .quantity-group button:hover {
-      background: #90caf9;
+      background: #dcdcdc;
     }
     .quantity-group input {
       width: 50px;
@@ -157,52 +141,82 @@ background: linear-gradient(
       border: 1px solid #ccc;
       border-radius: 6px;
       padding: 4px;
-      pointer-events: none;
-      user-select: none;
     }
-    .add-to-cart {
-      background: #3a3d3f;
-      color: white;
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .add-to-cart, .delete-btn {
+      flex: 1;
       border: none;
       padding: 10px;
       font-weight: bold;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s;
-      margin-bottom: 0.5rem;
+      transition: 0.3s;
+      color: white;
+    }
+    .add-to-cart {
+      background: linear-gradient(135deg, #007BFF, #004AAD);
     }
     .add-to-cart:hover {
- background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-
+      background: linear-gradient(135deg, #0056b3, #002f6c);
     }
+    .delete-btn {
+      background: linear-gradient(135deg, #D32F2F, #8B0000);
+    }
+    .delete-btn:hover {
+      background: linear-gradient(135deg, #b71c1c, #5a0000);
+    }
+
     .message {
       margin-top: 0.5rem;
       font-weight: bold;
-      min-height: 20px;
       font-size: 0.9rem;
+      color: #4CAF50;
     }
 
-    /* ✅ استجابة للشاشات الصغيرة */
+    /* ✅ الفوتر */
+    footer {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 1rem;
+      margin-top: 3rem;
+    }
+    .social-links {
+      margin-top: 0.8rem;
+    }
+    .social-links a {
+      color: #fff;
+      margin: 0 10px;
+      font-size: 1.4rem;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .social-links a:hover {
+      color: #ffd54f;
+    }
+
     @media (max-width: 768px) {
       nav {
         position: absolute;
         top: 70px;
         right: 0;
-     background: linear-gradient(to bottom, #8E2DE2, #4A00E0);
-
+        background: linear-gradient(to bottom, #4b6cb7, #182848);
         flex-direction: column;
-        align-items: flex-start;
         width: 100%;
         overflow: hidden;
         max-height: 0;
       }
       nav.show {
-        max-height: 300px; /* ارتفاع عند فتح القائمة */
+        max-height: 300px;
       }
       nav a {
         padding: 1rem;
         width: 100%;
-        text-align: right;
       }
       .menu-toggle {
         display: block;
@@ -213,7 +227,7 @@ background: linear-gradient(
 <body>
 
 <header>
-  <div class="logo">صفحة الألعاب</div>
+  <div class="logo">🎮 صفحة الألعاب</div>
   <button class="menu-toggle">☰</button>
   <nav>
     <a href="index.html">الرئيسية</a>
@@ -225,18 +239,23 @@ background: linear-gradient(
 
 <main id="products-container"></main>
 
+<footer>
+  © 2025 جميع الحقوق محفوظة | تصميم <a href="#" style="color:#4FC3F7; text-decoration:none;">موقع الألعاب</a> 🎮
+  <div class="social-links">
+    <a href="https://wa.me/966500000000" target="_blank">💬 واتساب</a>
+    <a href="https://instagram.com" target="_blank">📸 إنستغرام</a>
+    <a href="https://twitter.com" target="_blank">🐦 تويتر</a>
+  </div>
+</footer>
+
 <script>
-  // ✅ فتح وإغلاق القائمة للجوال
   const menuToggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('nav');
-  menuToggle.addEventListener('click', () => {
-    nav.classList.toggle('show');
-  });
+  menuToggle.addEventListener('click', () => nav.classList.toggle('show'));
 
-  // ✅ المنتجات
   const products = [
-    { id: "m1", name: "يد بلاستيشن", price: 12500, img: "الصور/٢٠٢٣٠١٠١_٢١٤٤٠٥.jpg" },
-    { id: "m2", name: "بلاستيشن", price: 805520, img: "الصور/٢٠٢٣٠٦٢٨_٠٦٢٣٣٤.jpg" },
+    { id: "m1", name: "يد بلايستيشن", price: 12500, img: "الصور/٢٠٢٣٠١٠١_٢١٤٤٠٥.jpg" },
+    { id: "m2", name: "بلايستيشن", price: 805520, img: "الصور/٢٠٢٣٠٦٢٨_٠٦٢٣٣٤.jpg" },
     { id: "m3", name: "سيارة كهرباء", price: 15040, img: "الصور/٢٠٢٣٠٦٢٨_٠٦٢٤٣٨.jpg" },
     { id: "m4", name: "مكعبات", price: 2501320, img: "الصور/٢٠٢٣٠٤١٤_٢٢١٧١٨.jpg" }
   ];
@@ -244,11 +263,9 @@ background: linear-gradient(
   function getCart() {
     return JSON.parse(localStorage.getItem('cart')) || [];
   }
-
   function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
-
   function updateCartCount() {
     const cart = getCart();
     const count = cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -258,7 +275,6 @@ background: linear-gradient(
   function createProductCard(product) {
     const card = document.createElement('div');
     card.classList.add('card');
-
     card.innerHTML = `
       <img src="${product.img}" alt="${product.name}">
       <div class="card-body">
@@ -270,60 +286,50 @@ background: linear-gradient(
           <input type="number" class="quantity" value="1" min="1" readonly />
           <button class="qty-plus">+</button>
         </div>
-        <div class="total-price">السعر الكلي: ${product.price} ريال</div>
-        <button class="add-to-cart">إضافة إلى السلة</button>
+        <div class="button-group">
+          <button class="add-to-cart">إضافة إلى السلة</button>
+          <button class="delete-btn">🗑 حذف</button>
+        </div>
         <div class="message"></div>
       </div>
     `;
 
     const qtyInput = card.querySelector('.quantity');
-    const totalPriceElem = card.querySelector('.total-price');
     const addToCartBtn = card.querySelector('.add-to-cart');
+    const deleteBtn = card.querySelector('.delete-btn');
     const message = card.querySelector('.message');
-
-    function updateTotalPrice() {
-      totalPriceElem.textContent = `السعر الكلي: ${product.price * parseInt(qtyInput.value)} ريال`;
-    }
 
     card.querySelector('.qty-minus').addEventListener('click', () => {
       let qty = parseInt(qtyInput.value);
-      if (qty > 1) {
-        qtyInput.value = qty - 1;
-        updateTotalPrice();
-      }
+      if (qty > 1) qtyInput.value = qty - 1;
     });
 
     card.querySelector('.qty-plus').addEventListener('click', () => {
-      let qty = parseInt(qtyInput.value);
-      qtyInput.value = qty + 1;
-      updateTotalPrice();
+      qtyInput.value = parseInt(qtyInput.value) + 1;
     });
 
     addToCartBtn.addEventListener('click', () => {
       const quantity = parseInt(qtyInput.value);
       let cart = getCart();
-      const existingIndex = cart.findIndex(item => item.id === product.id);
-      if (existingIndex !== -1) {
-        cart[existingIndex].quantity += quantity;
-      } else {
-        cart.push({ id: product.id, name: product.name, price: product.price, quantity });
-      }
+      const existing = cart.find(item => item.id === product.id);
+      if (existing) existing.quantity += quantity;
+      else cart.push({ id: product.id, name: product.name, price: product.price, quantity });
       saveCart(cart);
       updateCartCount();
-      message.style.color = 'green';
-      message.textContent = `تمت إضافة ${quantity} × ${product.name} إلى السلة`;
-      setTimeout(() => { message.textContent = ''; }, 3000);
+      message.textContent = `✅ تمت إضافة ${quantity} × ${product.name} إلى السلة`;
+      setTimeout(() => message.textContent = '', 3000);
     });
 
-    updateTotalPrice();
+    deleteBtn.addEventListener('click', () => {
+      card.remove();
+    });
+
     return card;
   }
 
   const container = document.getElementById('products-container');
-  products.forEach(prod => container.appendChild(createProductCard(prod)));
-
+  products.forEach(p => container.appendChild(createProductCard(p)));
   updateCartCount();
 </script>
-<script src="جافا السلة.js"></script>
 </body>
 </html>
